@@ -40,9 +40,10 @@ NAME_MAP: dict[str, str] = {
     "Eswatini":                     "eSwatini",
     "North Macedonia":              "North Macedonia",   # matches in newer builds
     "State of Palestine":           "Palestine",
-    "Timor-Leste":                  "Timor-Leste",       # matches in newer builds
+    "Timor-Leste":                  "East Timor",       # matches in newer builds
     "Myanmar":                      "Myanmar",           # matches; older = "Burma"
-    "Tanzania":                      "United Republic of Tanzania",
+    "Tanzania":                     "United Republic of Tanzania",
+    "Serbia":                       "Republic of Serbia",
 
     # Abbreviations / alternate forms
     "Brunei Darussalam":            "Brunei",
@@ -131,7 +132,7 @@ def build_merged_geodataframe(pollution: dict) -> gpd.GeoDataFrame:
     world = world[["ADMIN", "geometry"]].rename(columns={"ADMIN": "name"}).copy()
 
     # Also print all shapefile names that contain "korea" or "turk"
-    #print(world[world["name"].str.contains("Congo", case=False)]["name"].tolist())
+    print(world[world["name"].str.contains("Timor|Serbia", case=False)]["name"].tolist())
 
     # Build the tidy pollution DataFrame
     pm_df = _pollution_to_dataframe(pollution)

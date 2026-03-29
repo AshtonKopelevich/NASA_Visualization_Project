@@ -229,7 +229,7 @@ def build_tab_map(notebook, gdf, root, pop: dict):
     popup_country.pack(anchor=tk.W)
 
     popup_year = tk.Label(inner, text="", fg=SUBTEXT,
-                          font=("Courier New", 8))
+                          font=("Courier New", 8), bg=SURFACE)
     popup_year.pack(anchor=tk.W, pady=(0, 6))
 
     def _row(header: str):
