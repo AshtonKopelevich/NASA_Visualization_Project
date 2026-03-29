@@ -24,6 +24,7 @@ import matplotlib.cm as mcm
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import pandas as pd
+import geopandas as gpd
  
 from map_data import YEARS
 from map_player import MapPlayer
@@ -336,9 +337,11 @@ def build_tab_map(notebook, gdf, root, pop: dict):
         hit = frame[frame.geometry.contains(click_pt)]
         if hit.empty:
             # Try nearest within a small buffer for thin countries
-            frame["dist"] = frame.geometry.boundary.distance(click_pt)
+            frame_proj    = frame.to_crs("EPSG:3857")
+            click_pt_proj = gpd.GeoSeries([click_pt], crs="EPSG:4326").to_crs("EPSG:3857").iloc[0]
+            frame["dist"] = frame_proj.geometry.boundary.distance(click_pt_proj)
             nearest = frame.nsmallest(1, "dist")
-            if nearest["dist"].values[0] < 2.0:   # degrees tolerance
+            if nearest["dist"].values[0] < 200_000:   # 200 km tolerance in metres
                 hit = nearest
             else:
                 _hide_popup()
