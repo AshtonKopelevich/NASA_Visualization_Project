@@ -30,25 +30,23 @@ KG_TO_UG = 1e9          # kg/m³  →  µg/m³
 
 NAME_MAP: dict[str, str] = {
     # Spelling / diacritic differences
-    "Cote d'Ivoire":                "Côte d'Ivoire",
+    "Cote d'Ivoire":                "Ivory Coast",
     "Viet Nam":                     "Vietnam",
-    "Turkey":                       "Türkiye",
 
     # Political naming differences
     "Czech Republic":               "Czechia",
-    "North Korea":                  "Dem. Rep. Korea",
     "Republic of Congo":            "Congo",
-    "Dem. Rep. Congo":              "Dem. Rep. Congo",   # already matches
+    "Dem. Rep. Congo":              "Democratic Republic of the Congo",   # already matches
     "Eswatini":                     "eSwatini",
     "North Macedonia":              "North Macedonia",   # matches in newer builds
     "State of Palestine":           "Palestine",
     "Timor-Leste":                  "Timor-Leste",       # matches in newer builds
     "Myanmar":                      "Myanmar",           # matches; older = "Burma"
+    "Tanzania":                      "United Republic of Tanzania",
 
     # Abbreviations / alternate forms
     "Brunei Darussalam":            "Brunei",
     "Cabo Verde":                   "Cape Verde",
-    "Laos":                         "Lao PDR",
     "Kosovo":                       "Kosovo",            # absent in lowres; will be NaN
 }
 
@@ -131,6 +129,9 @@ def build_merged_geodataframe(pollution: dict) -> gpd.GeoDataFrame:
     # Keep only the columns we need. 'ADMIN' contains the country name.
     # We rename it to 'name' to keep compatibility with the rest of the script.
     world = world[["ADMIN", "geometry"]].rename(columns={"ADMIN": "name"}).copy()
+
+    # Also print all shapefile names that contain "korea" or "turk"
+    #print(world[world["name"].str.contains("Congo", case=False)]["name"].tolist())
 
     # Build the tidy pollution DataFrame
     pm_df = _pollution_to_dataframe(pollution)

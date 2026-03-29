@@ -40,16 +40,6 @@ pip install -r requirements.txt
 > conda install -c conda-forge geopandas
 > ```
 
-### Data
-
-Download the dataset from NASA:
-
-**[Country Trends in Major Air Pollutants — NASA Open Data](https://data.nasa.gov/dataset/country-trends-in-major-air-pollutants/resource/8409ae1d-7626-4d4b-bbdd-3fb055c2c24f)**
-
-Save the file as `data.xlsx` in the project root directory. The app expects two sheets:
-
-- `PM Pop.-Weighted (kg m^-3)` — population-weighted annual PM2.5 per country
-- `Population (GPWv4.11)` — population counts per country
 
 ### Running
 

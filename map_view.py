@@ -183,6 +183,8 @@ def build_tab_map(notebook, gdf, root, pop: dict):
     root     : tk.Tk root window (needed by MapPlayer for root.after scheduling)
     pop      : dict[str, list[float]] — population per 10,000 people, 2003–2018
     """
+
+    
     frame = tk.Frame(notebook, bg=BG)
     notebook.add(frame, text="  World Map  ")
     notebook.bind("<<NotebookTabChanged>>", lambda e: _hide_popup())

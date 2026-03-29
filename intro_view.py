@@ -271,7 +271,6 @@ def _health_table(parent):
                 fg   = HEADER_FG[c_idx]
                 font = ("Courier New", 9, "bold")
             elif c_idx == 1:
-                # Colour-code the quality column
                 fg = (
                     SAFE    if "Safe"     in cell else
                     ACCENT2 if "Moderate" in cell else
@@ -282,12 +281,21 @@ def _health_table(parent):
                 fg   = TEXT
                 font = FONT_SMALL
 
-            tk.Label(
-                row_frame, text=cell,
-                bg=row_bg, fg=fg, font=font,
-                width=width, anchor=tk.W, padx=8, pady=5,
-                justify=tk.LEFT,
-            ).pack(side=tk.LEFT)
+            if c_idx == 2:
+                # Last column: no fixed width, wraps instead
+                tk.Label(
+                    row_frame, text=cell,
+                    bg=row_bg, fg=fg, font=font,
+                    anchor=tk.W, padx=8, pady=5,
+                    justify=tk.LEFT, wraplength=480,
+                ).pack(side=tk.LEFT, fill=tk.X, expand=True)
+            else:
+                tk.Label(
+                    row_frame, text=cell,
+                    bg=row_bg, fg=fg, font=font,
+                    width=width, anchor=tk.W, padx=8, pady=5,
+                    justify=tk.LEFT,
+                ).pack(side=tk.LEFT)
 
 
 def _link_row(parent, title: str, url: str, description: str):
