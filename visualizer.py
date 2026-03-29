@@ -40,7 +40,6 @@ def _to_ug(value: float) -> float:
 
 
 def _styled_fig(figsize=(9, 5)):
-    """Return a Matplotlib Figure pre-styled for the dark theme."""
     fig, ax = plt.subplots(figsize=figsize, facecolor=BG)
     ax.set_facecolor(SURFACE)
     ax.tick_params(colors=SUBTEXT, labelsize=8)
@@ -50,7 +49,7 @@ def _styled_fig(figsize=(9, 5)):
     for spine in ax.spines.values():
         spine.set_edgecolor(GRID)
     ax.grid(color=GRID, linestyle="--", linewidth=0.6, alpha=0.7)
-    fig.tight_layout(pad=2.0)
+    fig.tight_layout(pad=2.0)   # only here, never in the plot functions
     return fig, ax
 
 
@@ -117,7 +116,6 @@ def plot_top_countries_bar(pollution: dict, ax, fig, year_idx: int = -1):
         f"Top {TOP_N} Countries by PM2.5 Exposure — {YEARS[year_idx]}",
         color=TEXT, fontsize=11, fontfamily="Courier New", pad=10
     )
-    fig.tight_layout(pad=2.0)
 
 
 def plot_country_timeseries(pollution: dict, country: str, ax, fig):
@@ -159,7 +157,6 @@ def plot_country_timeseries(pollution: dict, country: str, ax, fig):
     ax.set_xticks(YEARS)
     ax.set_xticklabels([str(y) for y in YEARS], rotation=45, fontsize=7, color=SUBTEXT)
     ax.yaxis.label.set_color(TEXT)
-    fig.tight_layout(pad=2.0)
 
 
 def plot_population_scatter(pollution: dict, pop: dict, ax, fig, year_idx: int = -1):
@@ -206,6 +203,7 @@ def plot_population_scatter(pollution: dict, pop: dict, ax, fig, year_idx: int =
     ax.set_xscale("log")
     ax.set_xlim(global_min_pop * 0.5, global_max_pop * 2)
     ax.set_ylim(0, global_max_pm * 1.1)
+    ax.set_autoscale_on(False)
     ax.xaxis.set_major_formatter(mticker.FuncFormatter(
         lambda x, _: f"{x/1e6:.0f}M" if x >= 1e6 else f"{x/1e3:.0f}K"
     ))
@@ -216,7 +214,6 @@ def plot_population_scatter(pollution: dict, pop: dict, ax, fig, year_idx: int =
         color=TEXT, fontsize=11, fontfamily="Courier New", pad=10
     )
     ax.legend(fontsize=8, facecolor=SURFACE, edgecolor=GRID, labelcolor=TEXT)
-    fig.tight_layout(pad=2.0)
 
     # Attach metadata for pick-event lookup by the caller
     sc._countries = countries

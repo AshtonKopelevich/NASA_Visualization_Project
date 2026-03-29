@@ -131,9 +131,6 @@ def build_merged_geodataframe(pollution: dict) -> gpd.GeoDataFrame:
     # We rename it to 'name' to keep compatibility with the rest of the script.
     world = world[["ADMIN", "geometry"]].rename(columns={"ADMIN": "name"}).copy()
 
-    # Also print all shapefile names that contain "korea" or "turk"
-    print(world[world["name"].str.contains("Timor|Serbia", case=False)]["name"].tolist())
-
     # Build the tidy pollution DataFrame
     pm_df = _pollution_to_dataframe(pollution)
 
